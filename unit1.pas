@@ -60,23 +60,17 @@ implementation
           else
            loc:=true;
       end;
-       
-       temp^.pnext:=s;
-	   {
-     if s^.col = temp^.col then
-      begin
-         temp:=s;
-         s:=s^.pnext;
-         dispose(temp);
-      end;}
-      if s=ls then
-        ls:=s
-      else
-        p^.pnext:=temp;
-
+      if s^.col <> temp^.col then
+       begin
+        temp^.pnext:=s;
+        if s=ls then
+         ls:=temp
+        else
+         p^.pnext:=temp;
+       end;
     end;
   end;
-
+{
 procedure xread(var ss:holemat; n:integer);
   var i,j:integer;  c:char;   xx:emat;
   begin
@@ -144,7 +138,7 @@ function add(var a,b:holemat) : holemat;
     end;
   end;
   add:=b;	
-  
+  }
 begin
 ls:=nil;
 end.

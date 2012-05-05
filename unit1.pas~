@@ -60,42 +60,44 @@ implementation
           else
            loc:=true;
       end;
-       
-       temp^.pnext:=s;
-	   {
-     if s^.col = temp^.col then
-      begin
-         temp:=s;
-         s:=s^.pnext;
-         dispose(temp);
-      end;}
-      if s=ls then
-        ls:=s
-      else
-        p^.pnext:=temp;
-
+      if s^.col <> temp^.col then
+       begin
+        temp^.pnext:=s;
+        if s=ls then
+         ls:=temp
+        else
+         p^.pnext:=temp;
+       end;
     end;
   end;
 
 procedure xread(var ss:holemat; n:integer);
-  var  xx:emat;   i,j:integer  top:pemat;
+  var i,j:integer;  c:char;   xx:emat;
   begin
-    i:=1; j:=1;      top:=nil;
-    while i<=n do
+    i:=1;  j:=1;
+    for i:=1 to n do
      begin
-      writeln('enter u=the num of line');
-      readln(i)
-      while j<= n and c='y' do
-       begin
-         writeln('enter the num of cal');
-         readln(xx.j);
-         writeln('enter the elemant');
-         readln(xx.a);
-         inz(top,xx);
-         writeln('do u want to add new element in the same line...... Y\N');
-         readln(c);
-       end
-    end;
+       top:=nil
+       writeln('you are in line number  ',i);
+       writeln('do you want to add any element in this line..?? y\n');
+       readln(c);
+       while (c='y')or (c='Y') do
+        begin
+          writeln('enter the num of col');
+          readln(xx.j);
+          if(xx.j>maxN)and(xx.j<0)then
+           writeln('plz readd the   0 < num < 100')
+          else
+           begin
+             writeln('enter the value');
+             readln(xx.val);
+             if(xx.val<>0)then
+               insert(top,xx);
+           end;
+          writeln('Do you want to add new value in same line...??');
+          readln(c);
+        end;
+     end;
   end;
 
 
@@ -126,13 +128,13 @@ function add(var a,b:holemat) : holemat;
            s2^.val:=s2^.val+s1^.val;
           end
           else
-		  begin
-		   reco.val:=s1^.val;
-		   reco.col:=s1^.col;
+          begin
+           reco.val:=s1^.val;
+           reco.col:=s1^.col;
            inz(s2,reco);
            b:=false;
-		  end;
-	    end;
+          end;
+	end;
     end;
   end;
   add:=b;	
